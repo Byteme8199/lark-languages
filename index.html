@@ -1,0 +1,630 @@
+
+<!DOCTYPE html> 
+<html>
+<head>
+<title>Lark Languages</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="assets/styles.css">
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<style>
+.developer_resets {
+	bottom: 0;
+	display:none;
+	position: absolute;
+	right:0;
+	z-index: 20;
+}
+</style>
+<script>
+
+var TL_STRINGS = {
+	'is_correct' : 'is correct.',
+	'is_incorrect' : 'is incorrect.',
+	'wrong_accent' : 'Almost, Incorrect Accent',
+	'wrong_accent_zh' : 'Almost, Incorrect Tone'
+}
+</script>
+
+<script>
+var IS_DEV = !!"";
+var FEATURE_FLAGS = {"scribe_attempts":true,"scribe_attempts_breakdown":false,"scribe_challenge_report":false};
+
+var FILE_NAME = 'assets/JULIA.mp4';
+
+var CAPTIONS = [
+	{ 
+    "id":"1",
+    "transcript":"...",
+    "translation":"...",
+    "time_in":0,
+    "time_out":6,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":" ... ","post":""}
+    ],
+    "translation_words":[
+      {"pre":"","word":" ...","post":""}
+    ]
+  },
+  { 
+		"id":"2",
+		"transcript":"¡Hola! Me alegro de verle otra vez.",
+		"translation":"Hi! Good to see you again!",
+		"time_in":6,
+		"time_out":9.7,
+		"exclude_from_dictation":0,
+		"set_number":1,
+		"caption_index":0,
+		"media_id":"1",
+		"media_lang_id":"es",
+		"transcript_words":[
+      {"pre":"¡","word":"Hola","post":"!"},
+      {"pre":"","word":"Me","post":""},
+      {"pre":"","word":"alegro","post":""},
+      {"pre":"","word":"de","post":""},
+      {"pre":"","word":"verle","post":""},
+      {"pre":"","word":"otra","post":""},
+      {"pre":"","word":"vez","post":"."}
+    ],
+		"translation_words":[
+      {"pre":"","word":"Hi","post":"!"},
+      {"pre":"","word":"Good","post":""},
+      {"pre":"","word":"to","post":""},
+      {"pre":"","word":"see","post":""},
+      {"pre":"","word":"you","post":""},
+      {"pre":"","word":"again","post":"!"}
+    ]
+	},
+  { 
+    "id":"3",
+    "transcript":"Me alegro de verle también.",
+    "translation":"Good to see you, too.",
+    "time_in":9.7,
+    "time_out":12,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"Me","post":""},
+      {"pre":"","word":"alegro","post":""},
+      {"pre":"","word":"de","post":"."},
+      {"pre":"","word":"verle","post":""},
+      {"pre":"","word":"tambien","post":"."}
+    ],
+    "translation_words":[
+      {"pre":"","word":"Good","post":""},
+      {"pre":"","word":"to","post":""},
+      {"pre":"","word":"see","post":""},
+      {"pre":"","word":"you","post":","},
+      {"pre":"","word":"too","post":"."}
+    ]
+  },
+  { 
+    "id":"4",
+    "transcript":"¿Que le gustaría ordenar hoy?",
+    "translation":"What would you like to order today?",
+    "time_in":12,
+    "time_out":14.6,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"¿","word":"Que","post":""},
+      {"pre":"","word":"le","post":""},
+      {"pre":"","word":"gustaría","post":"."},
+      {"pre":"","word":"ordenar","post":""},
+      {"pre":"","word":"hoy","post":"?"}
+    ],
+    "translation_words":[
+      {"pre":"","word":"What","post":""},
+      {"pre":"","word":"would","post":""},
+      {"pre":"","word":"you","post":""},
+      {"pre":"","word":"like","post":""},
+      {"pre":"","word":"to","post":""},
+      {"pre":"","word":"order","post":""},
+      {"pre":"","word":"today","post":"?"}
+    ]
+  },
+  { 
+    "id":"5",
+    "transcript":"Me gustaría un té verde y un bagel por favor.",
+    "translation":"I’d like a green tea and bagel please.",
+    "time_in":14.6,
+    "time_out":17.5,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"Me","post":""},
+      {"pre":"","word":"gustaría","post":""},
+      {"pre":"","word":"un","post":""},
+      {"pre":"","word":"té","post":""},
+      {"pre":"","word":"verde","post":""},
+      {"pre":"","word":"y","post":""},
+      {"pre":"","word":"un","post":""},
+      {"pre":"","word":"bagel","post":""},
+      {"pre":"","word":"por","post":""},
+      {"pre":"","word":"favor","post":"."}
+    ],
+    "translation_words":[
+      {"pre":"","word":"I'd","post":""},
+      {"pre":"","word":"like","post":""},
+      {"pre":"","word":"a","post":""},
+      {"pre":"","word":"green","post":""},
+      {"pre":"","word":"tea","post":""},
+      {"pre":"","word":"and","post":""},
+      {"pre":"","word":"bagel","post":""},
+      {"pre":"","word":"please","post":"."}
+    ]
+  },
+  { 
+    "id":"6",
+    "transcript":"Está bien. ¿Desea queso crema para su bagel?",
+    "translation":"Okay. Would you like cream cheese for your bagel?",
+    "time_in":17.5,
+    "time_out":22,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"Está","post":""},
+      {"pre":"","word":"bien","post":"."},
+      {"pre":"¿","word":"Desea","post":""},
+      {"pre":"","word":"queso","post":""},
+      {"pre":"","word":"crema","post":""},
+      {"pre":"","word":"para","post":""},
+      {"pre":"","word":"su","post":""},
+      {"pre":"","word":"bagel","post":"?"}
+    ],
+    "translation_words":[
+      {"pre":"","word":"Okay","post":"."},
+      {"pre":"","word":"Would","post":""},
+      {"pre":"","word":"you","post":""},
+      {"pre":"","word":"like","post":""},
+      {"pre":"","word":"cream","post":""},
+      {"pre":"","word":"cheese","post":""},
+      {"pre":"","word":"for","post":""},
+      {"pre":"","word":"your","post":""},
+      {"pre":"","word":"bagel","post":"?"}
+    ]
+  },
+  { 
+    "id":"7",
+    "transcript":"Si, por favor.",
+    "translation":"Yes, please",
+    "time_in":22,
+    "time_out":24,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"Si","post":","},
+      {"pre":"","word":"por","post":""},
+      {"pre":"","word":"favor","post":"."}
+    ],
+    "translation_words":[
+      {"pre":"","word":"Yes","post":","},
+      {"pre":"","word":"please","post":""}
+    ]
+  },
+  { 
+    "id":"8",
+    "transcript":"¿Desea un té pequeño o grande?",
+    "translation":"Okay. Would you like a small tea or a large tea?",
+    "time_in":24,
+    "time_out":27,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"¿","word":"Desea","post":""},
+      {"pre":"","word":"un","post":""},
+      {"pre":"","word":"té","post":""},
+      {"pre":"","word":"pequeño","post":""},
+      {"pre":"","word":"o","post":""},
+      {"pre":"","word":"grande","post":"?"}
+    ],
+    "translation_words":[
+      {"pre":"","word":"Okay","post":""},
+      {"pre":"","word":"Would","post":""},
+      {"pre":"","word":"you","post":""},
+      {"pre":"","word":"like","post":""},
+      {"pre":"","word":"a","post":""},
+      {"pre":"","word":"small","post":""},
+      {"pre":"","word":"tea","post":""},
+      {"pre":"","word":"or","post":""},
+      {"pre":"","word":"a","post":""},
+      {"pre":"","word":"large","post":""},
+      {"pre":"","word":"tea","post":"?"}
+    ]
+  },
+  { 
+    "id":"9",
+    "transcript":"Un té pequeño.",
+    "translation":"I’d like a small tea",
+    "time_in":27,
+    "time_out":28.8,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"Un","post":""},
+      {"pre":"","word":"té","post":""},
+      {"pre":"","word":"pequeño","post":"."}
+    ],
+    "translation_words":[
+      {"pre":"","word":"I'd","post":""},
+      {"pre":"","word":"like","post":""},
+      {"pre":"","word":"a","post":""},
+      {"pre":"","word":"small","post":""},
+      {"pre":"","word":"tea","post":"."}
+    ]
+  },
+  { 
+    "id":"10",
+    "transcript":"Está bien. ¿Desea leche o miel de abejas?",
+    "translation":"Okay, Got it. Would you like milk or honey?",
+    "time_in":28.8,
+    "time_out":40.5,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"Está","post":""},
+      {"pre":"","word":"bien","post":"."},
+      {"pre":"¿","word":"Desea","post":""},
+      {"pre":"","word":"leche","post":""},
+      {"pre":"","word":"o","post":""},
+      {"pre":"","word":"miel","post":""},
+      {"pre":"","word":"de","post":""},
+      {"pre":"","word":"abejas","post":"?"}
+    ],
+    "translation_words":[
+      {"pre":"","word":"Okay","post":","},
+      {"pre":"","word":"got","post":""},
+      {"pre":"","word":"it","post":"."},
+      {"pre":"","word":"Would","post":""},
+      {"pre":"","word":"you","post":""},
+      {"pre":"","word":"like","post":""},
+      {"pre":"","word":"milk","post":""},
+      {"pre":"","word":"or","post":""},
+      {"pre":"","word":"honey","post":"?"}
+    ]
+  },
+  { 
+    "id":"11",
+    "transcript":"No gracias.",
+    "translation":" No thanks.",
+    "time_in":40.5,
+    "time_out":42.3,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"No","post":""},
+      {"pre":"","word":"gracias","post":"."}
+    ],
+    "translation_words":[
+      {"pre":"","word":"No","post":""},
+      {"pre":"","word":"thanks","post":"."}
+    ]
+  },
+  { 
+    "id":"12",
+    "transcript":"Son $4.50",
+    "translation":"Your total is $4.50",
+    "time_in":42.3,
+    "time_out":46,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"Son","post":""},
+      {"pre":"","word":"$4.50","post":"."}
+    ],
+    "translation_words":[
+      {"pre":"","word":"Your","post":""},
+      {"pre":"","word":"total","post":""},
+      {"pre":"","word":"is","post":""},
+      {"pre":"","word":"$4.50","post":"."}
+    ]
+  },
+  { 
+    "id":"13",
+    "transcript":"$4.15?",
+    "translation":"$4.15?",
+    "time_in":46,
+    "time_out":47.75,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"$4.15","post":"?"}
+    ],
+    "translation_words":[
+      {"pre":"","word":"$4.15","post":"?"}
+    ]
+  },
+  { 
+    "id":"14",
+    "transcript":"$4.50.",
+    "translation":"$4.50.",
+    "time_in":47.75,
+    "time_out":49,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"$4.50","post":"."}
+    ],
+    "translation_words":[
+      {"pre":"","word":"$4.50","post":"."}
+    ]
+  },
+  { 
+    "id":"15",
+    "transcript":"$4.50...",
+    "translation":"$4.50...",
+    "time_in":49,
+    "time_out":54,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"$4.50","post":"."}
+    ],
+    "translation_words":[
+      {"pre":"","word":"$4.50","post":"."}
+    ]
+  },
+  { 
+    "id":"16",
+    "transcript":"¿Quiere un recibo?",
+    "translation":"Would you like a receipt?",
+    "time_in":54,
+    "time_out":555,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"¿","word":"Quiere","post":""},
+      {"pre":"","word":"un","post":""},
+      {"pre":"","word":"recibo","post":"?"}
+    ],
+    "translation_words":[
+      {"pre":"","word":"Would","post":""},
+      {"pre":"","word":"you","post":""},
+      {"pre":"","word":"like","post":""},
+      {"pre":"","word":"a","post":""},
+      {"pre":"","word":"receipt","post":"?"}
+    ]
+  },
+  { 
+    "id":"17",
+    "transcript":"No. Gracias.",
+    "translation":"No. Thank you.",
+    "time_in":55.5,
+    "time_out":57,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"No","post":"."},
+      {"pre":"","word":"Gracias","post":"."}
+    ],
+    "translation_words":[
+      {"pre":"","word":"No","post":"."},
+      {"pre":"","word":"Thank","post":""},
+      {"pre":"","word":"you","post":"."}
+    ]
+  },
+  { 
+    "id":"18",
+    "transcript":"Bueno. Que tenga un buen día",
+    "translation":"Okay. Have a good day.",
+    "time_in":57,
+    "time_out":58.4,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"Bueno","post":"."},
+      {"pre":"","word":"Que","post":""},
+      {"pre":"","word":"tenga","post":""},
+      {"pre":"","word":"un","post":""},
+      {"pre":"","word":"buen","post":""},
+      {"pre":"","word":"día","post":"."}
+    ],
+    "translation_words":[
+      {"pre":"","word":"Okay","post":"."},
+      {"pre":"","word":"Have","post":""},
+      {"pre":"","word":"a","post":""},
+      {"pre":"","word":"good","post":""},
+      {"pre":"","word":"day","post":"."}
+    ]
+  },
+  { 
+    "id":"19",
+    "transcript":"Usted también.",
+    "translation":"You too.",
+    "time_in":58.4,
+    "time_out":60,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":"Usted","post":""},
+      {"pre":"","word":"también","post":"."}
+    ],
+    "translation_words":[
+      {"pre":"","word":"You","post":"."},
+      {"pre":"","word":"too","post":"."}
+    ]
+  },
+  { 
+    "id":"20",
+    "transcript":"...",
+    "translation":"...",
+    "time_in":60,
+    "time_out":68.66,
+    "exclude_from_dictation":0,
+    "set_number":1,
+    "caption_index":0,
+    "media_id":"1",
+    "media_lang_id":"es",
+    "transcript_words":[
+      {"pre":"","word":" ... ","post":""}
+    ],
+    "translation_words":[
+      {"pre":"","word":" ...","post":""}
+    ]
+  }
+];
+
+// {"pre":"","word":"","post":""},
+
+
+var MEDIA_ID = 1;
+var APP_OPTIONS = {"media_id":1,"media_lang_id":"es","translation_lang_id":"en","media_lang_name":"Spanish","translation_lang_name":"English","disable_translations":false,"is_paying_user":false,"launch_options":{"slow":false,"fullscreen":false,"time":null,"play_through":false,"game_type":null,"hide_text":null},"game_opts":{"allowed":["cloze","vocab","choice","dictation"],"no_user":true},"vlid":31025281};
+var VIDEO_HOST = "";
+var VIDEO_URL = 'assets/JULIA.mp4';	
+
+var VIDEO_RANGE = { start: parseFloat("0"), end: parseFloat("0") };
+
+var VIDEO_TITLE =('Lark Languages').replace(/\\'/g, "'");
+
+var SPAM_BLOCKER = Math.floor(Math.random()*1000000);
+
+var SCRIBE_STAR_BREAKPOINTS = [0.25,0.5,0.75];
+
+</script>
+<script src="assets/scripts.js"></script>
+
+<script>
+// initalize select box & Application
+var app;
+$(function() {
+	app = new LarkLanguages.Application(APP_OPTIONS);
+});
+</script>
+
+
+</head>
+<body>
+  <nav class="navbar navbar-default" style="height: 80px; background-color: white;"">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <img alt="Lark Languages" src="assets/logo.png" style="">
+        </a>
+      </div>
+      <div class="indicator pull-right">
+        <span class="pull-left">Caption</span>
+        <div class="gr">
+          <span class="caption_position">0</span>
+          <span class="caption_of">/</span>
+          <span class="caption_count">1</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+	<div class="container">
+		<div id="video_wrap">
+			<div id="video_container">
+				<div id="embedded-player"></div>
+			</div>
+			<div id="controls" class="clearfix">				
+				<div class="scrub_bar">
+					<div class="track">
+						<div class="progress"> </div>
+					</div>
+					<div class="segments"> 
+
+					</div>
+					<div class="scrubber"> </div>
+					<div class="touch_scrubber"> </div>
+				</div>
+			</div>
+		</div>
+
+		<div id="captions_wrap">
+			<div id="captions">
+				<div class="wrap tn">
+					<div class="transcript text"></div>
+				</div>
+				<div class="wrap tt">
+					<div class="translation text"></div>
+				</div>
+			</div>
+		</div>
+
+		<div id="playback_controls" class="clearfix">
+			<div id="playback_inner" align="center">
+				<div class="group">
+          <div class="btn-group" role="group">
+            <button type="button" class="back btn btn-default"><span class="fa fa-step-backward fa-fw"></span> Back</button>
+            <button type="button" class="play btn btn-default"><span class="play">Play</span></button>
+            <button type="button" class="skip btn btn-default">Skip <span class="fa fa-step-forward fa-fw"></span></span>
+          </div>
+
+          <div class="btn-group" role="group">
+            <button type="button" class="loop btn btn-default">Loop <span class="fa fa-repeat fa-fw"></span></button>
+            <button type="button" class="slow btn btn-default">Slow <span class="fa fa-clock-o fa-fw"></span></button>
+          </div>
+
+				</div>
+			</div>
+		</div><!-- /#playback_controls -->
+	</div>
+
+	</body>
+</html>
