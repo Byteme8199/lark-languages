@@ -542,10 +542,6 @@ var VIDEO_RANGE = { start: parseFloat("0"), end: parseFloat("0") };
 
 var VIDEO_TITLE =('Lark Languages').replace(/\\'/g, "'");
 
-var SPAM_BLOCKER = Math.floor(Math.random()*1000000);
-
-var SCRIBE_STAR_BREAKPOINTS = [0.25,0.5,0.75];
-
 </script>
 <script src="assets/scripts.js"></script>
 
@@ -566,13 +562,13 @@ $(function() {
         <a class="navbar-brand" href="#">
           <img alt="Lark Languages" src="assets/logo.png" style="">
         </a>
-      </div>
-      <div class="indicator pull-right">
-        <span class="pull-left">Caption</span>
-        <div class="gr">
-          <span class="caption_position">0</span>
-          <span class="caption_of">/</span>
-          <span class="caption_count">1</span>
+        <div class="indicator">
+          <span class="pull-left">Caption</span>
+          <div class="gr">
+            <span class="caption_position">0</span>
+            <span class="caption_of">/</span>
+            <span class="caption_count">1</span>
+          </div>
         </div>
       </div>
     </div>

@@ -211,7 +211,8 @@ video {
 	text-transform: uppercase;
 	color:#aaa;
 	font-size:70%;
-	padding: 20px;
+	padding: 27px 0px 0px 15px;
+	float: left;
 }
 
 #captions_wrap {
