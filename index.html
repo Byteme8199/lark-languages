@@ -17,28 +17,7 @@
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-<style>
-.developer_resets {
-	bottom: 0;
-	display:none;
-	position: absolute;
-	right:0;
-	z-index: 20;
-}
-</style>
 <script>
-
-var TL_STRINGS = {
-	'is_correct' : 'is correct.',
-	'is_incorrect' : 'is incorrect.',
-	'wrong_accent' : 'Almost, Incorrect Accent',
-	'wrong_accent_zh' : 'Almost, Incorrect Tone'
-}
-</script>
-
-<script>
-var IS_DEV = !!"";
-var FEATURE_FLAGS = {"scribe_attempts":true,"scribe_attempts_breakdown":false,"scribe_challenge_report":false};
 
 var FILE_NAME = 'assets/JULIA.mp4';
 
@@ -532,15 +511,12 @@ var CAPTIONS = [
 
 // {"pre":"","word":"","post":""},
 
-
 var MEDIA_ID = 1;
 var APP_OPTIONS = {"media_id":1,"media_lang_id":"es","translation_lang_id":"en","media_lang_name":"Spanish","translation_lang_name":"English","disable_translations":false,"is_paying_user":false,"launch_options":{"slow":false,"fullscreen":false,"time":null,"play_through":false,"game_type":null,"hide_text":null},"game_opts":{"allowed":["cloze","vocab","choice","dictation"],"no_user":true},"vlid":31025281};
 var VIDEO_HOST = "";
 var VIDEO_URL = 'assets/JULIA.mp4';	
 
 var VIDEO_RANGE = { start: parseFloat("0"), end: parseFloat("0") };
-
-var VIDEO_TITLE =('Lark Languages').replace(/\\'/g, "'");
 
 </script>
 <script src="assets/scripts.js"></script>

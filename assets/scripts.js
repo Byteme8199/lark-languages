@@ -1,30 +1,4 @@
-/********************************/
-/* /js/html5_player.js */
-/********************************/
-
 "use strict";
-
-var Logger = {
-	logInBrowser: false,
-	logVerbosely: false,
-	logRecord: [],
-	log: function(message) {
-		this.logInBrowser && console.log(message);
-		this.logRecord.push(message);
-	},
-	logVerbose: function(message) {
-		if (!this.logVerbosely) return;
-
-		this.logInBrowser && console.log(message);
-		this.logRecord.push(message);
-	},
-	getLogs: function() { return this.logRecord.join('\n'); },
-	dumpLogs: function() {
-		var oldLogs = this.getLogs();
-		this.logRecord = [];
-		return oldLogs;
-	}
-}
 
 var event_mixin = {
 	bind: function() { $.fn.on.apply($(this), Array.prototype.slice.apply(arguments)); return this; },
@@ -34,10 +8,6 @@ var event_mixin = {
 };
 
 var LarkLanguages = (function($) {
-
-/* for performance reasons, captions are preloaded as
-var CAPTIONS = {massive json data} */
-
 
 var localStorageWrap = {
 	getItem: function(key) {
@@ -59,13 +29,8 @@ var localStorageWrap = {
 
 }
 
-/* ***************************************************
- *
- * Utility Functions
- *  tacked on to jQuery
- *
- * **************************************************/
 $.sum = function(lhs, rhs) { return lhs + rhs; };
+
 $.clamp = function (v,min,max) {
 	return Math.min(Math.max(v,min),max);
 };
@@ -149,12 +114,6 @@ var caption_methods = {
 	}
 }
 
-
-/* ***************************************************
- *
- * Video Controllers & View Elements
- *
- * **************************************************/
 var vcCommonMethods = {
 	_atVideoEnd: false,
 	_loopForever: false,
@@ -862,12 +821,6 @@ $.extend(PlaybackControls.prototype,{
 	}
 });
 
-
-/* ***************************************************
- *
- * Other non-game interface elements
- *
- * **************************************************/
 
 function CaptionDisplay(vc,captions,app){
 	this.init(vc,captions,app);
